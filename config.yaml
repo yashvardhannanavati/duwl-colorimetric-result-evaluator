@@ -1,0 +1,140 @@
+# Configuration for Aquavial Quick Check Waterline Test Kit Analyzer
+
+# CALIBRATED Reference color standards (from confirmed A-photo samples)
+# Calibrated on: 2026-02-11
+# Camera: Ricoh 80G, macro mode, Shade white balance, white box
+# PINK: centroid of 26 confirmed pink samples (R-G=37, strong red dominance)
+# PURPLE: centroid of 2 confirmed purple samples (R-G=11, muted/balanced)
+# CLEAR: centroid of 2 confirmed clear samples (R-G=-3, no red tint)
+# Liquid region: Lower area, 10% from bottom, focused sampling (25% height, 35% margins)
+reference_colors:
+  pink:
+    rgb: [170, 133, 160]
+    label: "PINK - Clean"
+    cfu_range: "<500 CFU/mL"
+    description: "Clean water"
+
+  purple:
+    rgb: [154, 143, 156]
+    label: "PURPLE - Contaminated"
+    cfu_range: "500-2000 CFU/mL"
+    description: "Contaminated water"
+
+  clear:
+    rgb: [151, 154, 162]
+    label: "CLEAR - Highly Contaminated"
+    cfu_range: ">2000 CFU/mL"
+    description: "Highly contaminated water"
+
+# Detection parameters
+detection:
+  # Blue cap detection (HSV color space) - Aquavial Quick Check
+  blue_cap_hsv_lower: [100, 100, 100]
+  blue_cap_hsv_upper: [130, 255, 255]
+
+  # Black cap detection (HSV color space) - For official reference images
+  black_cap_hsv_lower: [0, 0, 0]
+  black_cap_hsv_upper: [180, 255, 50]
+
+  # Vial dimensions (relative)
+  min_vial_aspect_ratio: 0.3
+  max_vial_aspect_ratio: 0.7
+  min_vial_area: 5000  # pixels
+
+  # Circle detection (Hough)
+  hough_dp: 1.2
+  hough_min_dist: 100
+  hough_param1: 50
+  hough_param2: 30
+  hough_min_radius: 20
+  hough_max_radius: 200
+
+# Color extraction parameters
+color_extraction:
+  # Sample from central 60% of liquid region
+  liquid_sample_percentage: 0.6
+
+  # Blur kernel size for noise reduction
+  median_blur_kernel: 5
+
+  # Minimum saturation threshold for CLEAR classification
+  clear_saturation_threshold: 0.1  # 10%
+
+  # Minimum pixels required for valid sample
+  min_sample_pixels: 100
+
+# Classification parameters
+classification:
+  # Weighted RGB distance formula weights
+  # Distance = sqrt(2*(R1-R2)² + 4*(G1-G2)² + 3*(B1-B2)²)
+  rgb_weight_r: 2.0
+  rgb_weight_g: 4.0
+  rgb_weight_b: 3.0
+
+  # Confidence score thresholds
+  high_confidence_threshold: 80
+  low_confidence_threshold: 50
+
+  # Ambiguity threshold (% difference between closest distances)
+  ambiguity_threshold: 0.15  # 15%
+
+# Quality indicators
+quality:
+  # Color uniformity (variance threshold)
+  high_uniformity_variance: 100
+  low_uniformity_variance: 1000
+
+  # Image quality (brightness thresholds)
+  min_brightness: 30
+  max_brightness: 225
+  optimal_brightness_min: 80
+  optimal_brightness_max: 180
+
+  # Sharpness thresholds (Laplacian variance) - Adjusted for plastic vial
+  # Plastic vials have inherent slight blur, so lower thresholds are acceptable
+  excellent_sharpness: 50  # Originally 100, reduced for plastic material
+  acceptable_sharpness: 25  # Originally 50, reduced for plastic material
+  poor_sharpness: 10  # Below this is unusable
+
+  # Detection confidence thresholds
+  min_detection_confidence: 20  # Lowered from 25 for plastic vials
+
+# Image Preprocessing (CRITICAL for accurate color detection)
+preprocessing:
+  # Enable preprocessing pipeline
+  enabled: true
+
+  # White balance correction (fixes gray background color shift)
+  white_balance: false
+  white_balance_method: "background"  # "background" = sample white box corners, "gray_world" = LAB gray world
+
+  # Contrast enhancement (separates pink/purple/clear better)
+  contrast_enhancement: true
+
+  # Sharpening (enhances edge definition for better detection)
+  sharpening:
+    enabled: true
+    amount: 1.0  # 0.5=light, 1.0=medium, 1.5=heavy
+    kernel_size: 2.0  # Gaussian blur kernel size for unsharp mask
+
+  # Noise reduction (removes sensor noise) - DISABLED: Reduces sharpness by 81%!
+  noise_reduction: false
+
+  # Save comparison images (original vs preprocessed)
+  save_comparison: true
+
+# Output settings
+output:
+  # Visual output options
+  show_bounding_box: true
+  show_color_sample: true
+  show_reference_comparison: true
+  show_distance_chart: true
+
+  # Export options
+  save_annotated_image: true
+  save_csv: true
+
+  # Output directories
+  output_dir: "A_photos_output_June3"
+  csv_filename: "waterline_test_results_A-1-1.csv"

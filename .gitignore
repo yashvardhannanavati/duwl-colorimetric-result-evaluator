@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Output files
+output/
+*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Loose photo files
+test_input.JPG
+
+# Photo input/output directories (not for version control)
+A_photos_output/
+A_photos_output_June3/
+A_photos_output_muted/
+B_photos_output/
+C_photos_output/
+D_photos_output/
+E_photos_output/
+calibration_output/
+Cropped_A_photos/
+Cropped_C_photos/
+Cropped_D_photos/
+Cropped_E_photos/
+digicam_standardized_photos/
+SCD_cropped*/
+Standard Photos Aquavial/
+calibrated_config.yaml
