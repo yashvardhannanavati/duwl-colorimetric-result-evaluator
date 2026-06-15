@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-02-11T22:48:45.100481",
+  "image_path": "Cropped_A_photos/A1-2-recapture-b.JPG",
+  "classification": "PINK",
+  "cfu_range": "<500 CFU/mL",
+  "confidence_score": 72.20919556120379,
+  "color_metrics": {
+    "sample_rgb": [
+      169,
+      138,
+      165
+    ],
+    "sample_hsv": [
+      154.0,
+      0.1843137254901961,
+      0.6627450980392157
+    ],
+    "saturation_score": 18.43137254901961,
+    "distance_to_pink": 13.30413469565007,
+    "distance_to_purple": 28.160255680657446,
+    "distance_to_clear": 41.2189276910499
+  },
+  "quality_indicators": {
+    "color_uniformity": 92.80436313824855,
+    "image_quality": "fair",
+    "detection_confidence": 71.96094724399063
+  }
+}
